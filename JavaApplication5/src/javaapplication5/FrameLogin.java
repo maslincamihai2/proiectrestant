@@ -117,8 +117,25 @@ public class FrameLogin extends javax.swing.JFrame {
             case 1:
                 break;
             case 2:
+        {
+            try {
+                new FrameHr().setVisible(true);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
                 break;
-            case 3: ;
+            case 3: {
+            try {
+                new FrameContabilitate().setVisible(true);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

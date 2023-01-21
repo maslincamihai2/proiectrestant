@@ -5,6 +5,12 @@
  */
 package javaapplication5;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author User
@@ -14,8 +20,20 @@ public class FrameContabilitate extends javax.swing.JFrame {
     /**
      * Creates new form FrameContabilitate
      */
-    public FrameContabilitate() {
+    public FrameContabilitate() throws ClassNotFoundException, SQLException {
         initComponents();
+        
+        
+        incarcaTabelPersoane();
+    }
+    
+    public void incarcaTabelPersoane() throws ClassNotFoundException, SQLException{
+        ArrayList<Persoana> persoane = Bd.getPersoane();
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        for (Persoana p: persoane) {
+            String[] inregistrare = {p.getNume(), String.valueOf(p.getSalar()), p.getIban()};
+            dtm.addRow(inregistrare);
+        }
     }
 
     /**
@@ -151,7 +169,13 @@ public class FrameContabilitate extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameContabilitate().setVisible(true);
+                try {
+                    new FrameContabilitate().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(FrameContabilitate.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(FrameContabilitate.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

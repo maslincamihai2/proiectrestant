@@ -5,6 +5,13 @@
  */
 package javaapplication5;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author User
@@ -14,8 +21,20 @@ public class FrameHr extends javax.swing.JFrame {
     /**
      * Creates new form FrameHr
      */
-    public FrameHr() {
+    public FrameHr() throws ClassNotFoundException, SQLException {
         initComponents();
+        incarcaTabelPersoane();
+    }
+
+    public void incarcaTabelPersoane() throws ClassNotFoundException, SQLException {
+        ArrayList<Persoana> persoane = Bd.getPersoane();
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        for (Persoana p : persoane) {
+            String[] inregistrare = {p.getNume(), String.valueOf(p.getIdDept()),
+                String.valueOf(p.getSalar()),
+                p.getAdresa(), p.getTelefon(), p.getMail(), String.valueOf(p.getZileConcediu())};
+            dtm.addRow(inregistrare);
+        }
     }
 
     /**
@@ -62,7 +81,7 @@ public class FrameHr extends javax.swing.JFrame {
 
             },
             new String [] {
-                "nume", "dept", "salar", "norma", "data angajare", "adresa", "telefon", "email"
+                "nume", "dept", "salar", "adresa", "telefon", "email", "zile concediu"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -80,10 +99,20 @@ public class FrameHr extends javax.swing.JFrame {
         jLabel2.setText("Date angajati");
 
         jButton1.setText("adauga angajat nou");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("grupurile mele");
 
         jButton3.setText("completeaza formular");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("modifica date angajat");
 
@@ -143,6 +172,20 @@ public class FrameHr extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        FrameAdaugaAngajat f = new FrameAdaugaAngajat();
+        f.setVisible(true);
+        f.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        FrameForm f = new FrameForm();
+        f.setVisible(true);
+        f.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -173,7 +216,13 @@ public class FrameHr extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameHr().setVisible(true);
+                try {
+                    new FrameHr().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(FrameHr.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(FrameHr.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
