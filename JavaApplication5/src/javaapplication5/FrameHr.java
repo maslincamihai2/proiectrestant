@@ -5,7 +5,10 @@
  */
 package javaapplication5;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +27,7 @@ public class FrameHr extends javax.swing.JFrame {
     public FrameHr() throws ClassNotFoundException, SQLException {
         initComponents();
         incarcaTabelPersoane();
+        incarcaTabelTask();
     }
 
     public void incarcaTabelPersoane() throws ClassNotFoundException, SQLException {
@@ -34,6 +38,17 @@ public class FrameHr extends javax.swing.JFrame {
                 String.valueOf(p.getSalar()),
                 p.getAdresa(), p.getTelefon(), p.getMail(), String.valueOf(p.getZileConcediu())};
             dtm.addRow(inregistrare);
+        }
+    }
+
+    public void incarcaTabelTask() throws ClassNotFoundException, SQLException {
+        ArrayList<Task> taskuri = Bd.getTaskuri();
+        DefaultTableModel dtm = (DefaultTableModel) jTable3.getModel();
+        for (Task t : taskuri) {
+            if (t.getIdPersoana() == Persoana.getIdPersoanaLogata()){
+                Object[] inregistrare = {t.getDescriere(), t.getDeadline()};
+                dtm.addRow(inregistrare);
+            }
         }
     }
 

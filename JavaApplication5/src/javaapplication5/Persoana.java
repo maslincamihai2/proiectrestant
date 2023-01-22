@@ -5,24 +5,30 @@
  */
 package javaapplication5;
 
-import java.sql.Date;
-
 /**
  *
  * @author User
  */
 public class Persoana {
 
-    String nume;
-    int id_dept;
-    String adresa;
-    String telefon;
-    String email;
-    String iban;
-    int zileConcediu;
-    float salar;
+    private String nume;
+    private int id;
+    private int id_dept;
+    private String adresa;
+    private String telefon;
+    private String email;
+    private String iban;
+    private int zileConcediu;
+    private float salar;
 
-    public Persoana(String nume, int id_dept, String adresa, String telefon, String email, String iban, int zileConcediu, float salar) {
+    private static int idPersoanaLogata;
+    
+    public static int getIdPersoanaLogata(){
+        return idPersoanaLogata;
+    }
+    
+    public Persoana(int id, String nume, int id_dept, String adresa, String telefon, String email, String iban, int zileConcediu, float salar) {
+        this.id = id;
         this.nume = nume;
         this.id_dept = id_dept;
         this.adresa = adresa;
@@ -31,6 +37,14 @@ public class Persoana {
         this.iban = iban;
         this.zileConcediu = zileConcediu;
         this.salar = salar;
+    }
+    
+    int getId() {
+    return id;
+    }
+
+    public static void setIdPersoanaLogata(int idPersoanaLogata) {
+        Persoana.idPersoanaLogata = idPersoanaLogata;
     }
 
     String getNume() {

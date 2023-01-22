@@ -34,6 +34,7 @@ public class Bd {
         Statement st = c.createStatement();
         ResultSet rs = st.executeQuery("SELECT * FROM PERSOANA");
         while (rs.next()) {
+            int id = rs.getInt(1);
             String nume = rs.getString(4);
             int id_dept = rs.getInt(3);
             String adresa = rs.getString(6);
@@ -42,11 +43,11 @@ public class Bd {
             String iban = rs.getString(10);
             int zileConcediu = rs.getInt(11);
             float salar = rs.getFloat(9);
-            persoane.add(new Persoana(nume, id_dept, adresa, telefon, email, iban, zileConcediu, salar));
+            persoane.add(new Persoana(id, nume, id_dept, adresa, telefon, email, iban, zileConcediu, salar));
         }
         return persoane;
     }
-        
+
     public static ArrayList<Formular> getFormulare() throws ClassNotFoundException, SQLException {
         ArrayList<Formular> formulare = new ArrayList();
         Connection c = openConn();
@@ -56,6 +57,28 @@ public class Bd {
             formulare.add(new Formular(rs.getString(3), rs.getString(4)));
         }
         return formulare;
+    }
+
+    public static ArrayList<Task> getTaskuri() throws ClassNotFoundException, SQLException {
+        ArrayList<Task> taskuri = new ArrayList();
+        Connection c = openConn();
+        Statement st = c.createStatement();
+        ResultSet rs = st.executeQuery("SELECT * FROM TASK");
+        while (rs.next()) {
+            taskuri.add(new Task(rs.getInt(4), rs.getString(3), rs.getDate(2)));
+        }
+        return taskuri;
+    }
+
+    public static ArrayList<Departament> getDept() throws ClassNotFoundException, SQLException {
+        ArrayList<Departament> departamente = new ArrayList();
+        Connection c = openConn();
+        Statement st = c.createStatement();
+        ResultSet rs = st.executeQuery("SELECT * FROM Departament");
+        while (rs.next()) {
+            departamente.add(new Departament(rs.getInt(1), rs.getString(2)));
+        }
+        return departamente;
     }
 
     public static void adaugaPersoana(Persoana p) throws ClassNotFoundException, SQLException {
@@ -98,5 +121,13 @@ public class Bd {
         PreparedStatement ps = c.prepareStatement("DELETE FROM PERSOANA WHERE ID = ?");
         ps.setInt(1, idPersoana);
         ps.execute();
+    }
+
+    static void modificaDept(int id, String numeNou) throws ClassNotFoundException, SQLException {
+        Connection c = openConn();
+        PreparedStatement ps = c.prepareStatement("UPDATE DEPARTAMENT SET nume = ? WHERE ID = ?");
+        ps.setString(1, numeNou);
+        ps.setInt(2, id);
+        ps.execute();   
     }
 }

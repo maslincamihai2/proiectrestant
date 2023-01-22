@@ -25,6 +25,7 @@ public class FrameContabilitate extends javax.swing.JFrame {
         
         
         incarcaTabelPersoane();
+        incarcaTabelTask();
     }
     
     public void incarcaTabelPersoane() throws ClassNotFoundException, SQLException{
@@ -33,6 +34,18 @@ public class FrameContabilitate extends javax.swing.JFrame {
         for (Persoana p: persoane) {
             String[] inregistrare = {p.getNume(), String.valueOf(p.getSalar()), p.getIban()};
             dtm.addRow(inregistrare);
+        }
+    }
+    
+    
+    public void incarcaTabelTask() throws ClassNotFoundException, SQLException {
+        ArrayList<Task> taskuri = Bd.getTaskuri();
+        DefaultTableModel dtm = (DefaultTableModel) jTable2.getModel();
+        for (Task t : taskuri) {
+            if (t.getIdPersoana() == Persoana.getIdPersoanaLogata()){
+                Object[] inregistrare = {t.getDescriere(), t.getDeadline()};
+                dtm.addRow(inregistrare);
+            }
         }
     }
 

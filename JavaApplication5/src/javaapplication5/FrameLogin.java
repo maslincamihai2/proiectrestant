@@ -97,40 +97,32 @@ public class FrameLogin extends javax.swing.JFrame {
                 System.out.println("cont gresit");
                 return;
             }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
         int idDept = 0;
         try {
             idDept = cont.getDept();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+            Persoana.setIdPersoanaLogata(cont.getIdPersoana());
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
         switch (idDept) {
             case 0:
                 System.out.println("eroare idetificare departament");
                 break;
-            case 1:
-        {
-            try {
-                new FrameAdmin().setVisible(true);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
+            case 1: {
+                try {
+                    new FrameAdmin().setVisible(true);
+                } catch (ClassNotFoundException | SQLException ex) {
+                    Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        }
-                break;
+            break;
             case 2: {
                 try {
                     new FrameHr().setVisible(true);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (SQLException ex) {
+                } catch (ClassNotFoundException | SQLException ex) {
                     Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

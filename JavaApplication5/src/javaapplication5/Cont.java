@@ -30,20 +30,33 @@ public class Cont {
         ps.setString(1, user);
         ps.setString(2, parola);
         ResultSet rs = ps.executeQuery();
-        if (rs.next() == false){
+        if (rs.next() == false) {
             return false;
         }
         return true;
     }
-    
-    public int getDept() throws ClassNotFoundException, SQLException{
+
+    public int getDept() throws ClassNotFoundException, SQLException {
         Connection c = Bd.openConn();
-        
+
         PreparedStatement ps = c.prepareStatement("SELECT id_dept FROM PERSOANA, CONT WHERE ID_CONT = (SELECT ID FROM CONT WHERE USER = ? AND PAROLA = ?)");
         ps.setString(1, user);
         ps.setString(2, parola);
         ResultSet rs = ps.executeQuery();
-        if (rs.next()){
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+        return 0;
+    }
+
+    public int getIdPersoana() throws ClassNotFoundException, SQLException {
+        Connection c = Bd.openConn();
+
+        PreparedStatement ps = c.prepareStatement("SELECT PERSOANA.ID FROM PERSOANA,CONT WHERE PERSOANA.ID_CONT = (SELECT CONT.ID FROM CONT WHERE USER = ? AND PAROLA = ?)");
+        ps.setString(1, user);
+        ps.setString(2, parola);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
             return rs.getInt(1);
         }
         return 0;
