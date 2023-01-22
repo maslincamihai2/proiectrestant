@@ -14,11 +14,19 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
+ * Clasa execută operațiuni cu baza de date.
  *
  * @author User
  */
 public class Bd {
 
+    /**
+     * Stabilește o conexiune cu baza de date.
+     *
+     * @return obiect de tip Connection utilizat în executarea de statement-uri
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public static Connection openConn() throws ClassNotFoundException, SQLException {
         String driver = "com.mysql.jdbc.Driver";
         Class.forName(driver);
@@ -28,6 +36,13 @@ public class Bd {
         return (Connection) DriverManager.getConnection(url, user, password);
     }
 
+    /**
+     * Returnează înregistrările din tabela Persoana
+     *
+     * @return ArrayList de obiecte de tip Persoana
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public static ArrayList<Persoana> getPersoane() throws ClassNotFoundException, SQLException {
         ArrayList<Persoana> persoane = new ArrayList();
         Connection c = openConn();
@@ -48,6 +63,13 @@ public class Bd {
         return persoane;
     }
 
+    /**
+     * Returnează înregistrările din tabela Formular
+     *
+     * @return ArrayList de obiecte de tip Formular
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public static ArrayList<Formular> getFormulare() throws ClassNotFoundException, SQLException {
         ArrayList<Formular> formulare = new ArrayList();
         Connection c = openConn();
@@ -59,6 +81,13 @@ public class Bd {
         return formulare;
     }
 
+    /**
+     * Returnează înregistrările din tabela Task
+     *
+     * @return ArrayList de obiecte de tip Task
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public static ArrayList<Task> getTaskuri() throws ClassNotFoundException, SQLException {
         ArrayList<Task> taskuri = new ArrayList();
         Connection c = openConn();
@@ -70,6 +99,13 @@ public class Bd {
         return taskuri;
     }
 
+    /**
+     * Returnează înregistrările din tabela Departament
+     *
+     * @return ArrayList de obiecte de tip Departament
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public static ArrayList<Departament> getDept() throws ClassNotFoundException, SQLException {
         ArrayList<Departament> departamente = new ArrayList();
         Connection c = openConn();
@@ -81,6 +117,12 @@ public class Bd {
         return departamente;
     }
 
+    /**
+     * Adaugă o înregistrare în tabela Persoana din baza de date
+     * @param p obiect de tip Persoana
+     * @throws ClassNotFoundException
+     * @throws SQLException 
+     */
     public static void adaugaPersoana(Persoana p) throws ClassNotFoundException, SQLException {
         Connection c = openConn();
         PreparedStatement ps = c.prepareStatement("INSERT INTO PERSOANA(nume,"
@@ -97,6 +139,12 @@ public class Bd {
         ps.execute();
     }
 
+    /**
+     * Adaugă o înregistrare în tabela Formular din baza de date
+     * @param f obiect de tip Formular
+     * @throws ClassNotFoundException
+     * @throws SQLException 
+     */
     public static void trimiteFormular(Formular f) throws ClassNotFoundException, SQLException {
         Connection c = openConn();
         PreparedStatement ps = c.prepareStatement("INSERT INTO FORMULAR(titlu, descriere)"
@@ -106,6 +154,12 @@ public class Bd {
         ps.execute();
     }
 
+    /**
+     * Adaugă o înregistrare în tabela Task din baza de date
+     * @param t obiect de tip Task
+     * @throws ClassNotFoundException
+     * @throws SQLException 
+     */
     public static void trimiteTask(Task t) throws ClassNotFoundException, SQLException {
         Connection c = openConn();
         PreparedStatement ps = c.prepareStatement("INSERT INTO TASK(id_utilizator, descriere, deadline)"
@@ -116,6 +170,12 @@ public class Bd {
         ps.execute();
     }
 
+    /**
+     * Șterge o înregistrare din tabela Persoană din baza de date.
+     * @param idPersoana identificatorul unic al persoanei care se șterge din registru
+     * @throws ClassNotFoundException
+     * @throws SQLException 
+     */
     public static void concediaza(int idPersoana) throws ClassNotFoundException, SQLException {
         Connection c = openConn();
         PreparedStatement ps = c.prepareStatement("DELETE FROM PERSOANA WHERE ID = ?");
@@ -123,11 +183,18 @@ public class Bd {
         ps.execute();
     }
 
+    /**
+     * Actualizează o înregistrare din tabela Departament din baza de date.
+     * @param id identificatorul unic al departamentului din baza de date
+     * @param numeNou denumirea nouă dată departamentului
+     * @throws ClassNotFoundException
+     * @throws SQLException 
+     */
     static void modificaDept(int id, String numeNou) throws ClassNotFoundException, SQLException {
         Connection c = openConn();
         PreparedStatement ps = c.prepareStatement("UPDATE DEPARTAMENT SET nume = ? WHERE ID = ?");
         ps.setString(1, numeNou);
         ps.setInt(2, id);
-        ps.execute();   
+        ps.execute();
     }
 }
