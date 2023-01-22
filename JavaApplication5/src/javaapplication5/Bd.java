@@ -46,6 +46,17 @@ public class Bd {
         }
         return persoane;
     }
+        
+    public static ArrayList<Formular> getFormulare() throws ClassNotFoundException, SQLException {
+        ArrayList<Formular> formulare = new ArrayList();
+        Connection c = openConn();
+        Statement st = c.createStatement();
+        ResultSet rs = st.executeQuery("SELECT * FROM FORMULAR");
+        while (rs.next()) {
+            formulare.add(new Formular(rs.getString(3), rs.getString(4)));
+        }
+        return formulare;
+    }
 
     public static void adaugaPersoana(Persoana p) throws ClassNotFoundException, SQLException {
         Connection c = openConn();
@@ -69,5 +80,23 @@ public class Bd {
                 + "values (?, ?)");
         ps.setString(1, f.getTitlu());
         ps.setString(2, f.getContinut());
+        ps.execute();
+    }
+
+    public static void trimiteTask(Task t) throws ClassNotFoundException, SQLException {
+        Connection c = openConn();
+        PreparedStatement ps = c.prepareStatement("INSERT INTO TASK(id_utilizator, descriere, deadline)"
+                + "values (?, ?, ?)");
+        ps.setInt(1, t.getIdPersoana());
+        ps.setString(2, t.getDescriere());
+        ps.setDate(3, t.getDeadline());
+        ps.execute();
+    }
+
+    public static void concediaza(int idPersoana) throws ClassNotFoundException, SQLException {
+        Connection c = openConn();
+        PreparedStatement ps = c.prepareStatement("DELETE FROM PERSOANA WHERE ID = ?");
+        ps.setInt(1, idPersoana);
+        ps.execute();
     }
 }

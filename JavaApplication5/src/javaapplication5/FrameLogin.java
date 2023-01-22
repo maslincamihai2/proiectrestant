@@ -110,16 +110,14 @@ public class FrameLogin extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
-        switch(idDept){
+        switch (idDept) {
             case 0:
                 System.out.println("eroare idetificare departament");
                 break;
             case 1:
-                break;
-            case 2:
         {
             try {
-                new FrameHr().setVisible(true);
+                new FrameAdmin().setVisible(true);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
@@ -127,15 +125,25 @@ public class FrameLogin extends javax.swing.JFrame {
             }
         }
                 break;
-            case 3: {
-            try {
-                new FrameContabilitate().setVisible(true);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
+            case 2: {
+                try {
+                    new FrameHr().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        }
+            break;
+            case 3: {
+                try {
+                    new FrameContabilitate().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(FrameLogin.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
