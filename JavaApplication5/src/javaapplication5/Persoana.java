@@ -5,6 +5,11 @@
  */
 package javaapplication5;
 
+import com.mysql.jdbc.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import static javaapplication5.Bd.openConn;
+
 /**
  *
  * @author User
@@ -13,7 +18,7 @@ public class Persoana {
 
     private String nume;
     private int id;
-    private int id_dept;
+    private int idDept;
     private String adresa;
     private String telefon;
     private String email;
@@ -22,15 +27,15 @@ public class Persoana {
     private float salar;
 
     private static int idPersoanaLogata;
-    
-    public static int getIdPersoanaLogata(){
+
+    public static int getIdPersoanaLogata() {
         return idPersoanaLogata;
     }
-    
+
     public Persoana(int id, String nume, int id_dept, String adresa, String telefon, String email, String iban, int zileConcediu, float salar) {
         this.id = id;
         this.nume = nume;
-        this.id_dept = id_dept;
+        this.idDept = id_dept;
         this.adresa = adresa;
         this.telefon = telefon;
         this.email = email;
@@ -38,9 +43,9 @@ public class Persoana {
         this.zileConcediu = zileConcediu;
         this.salar = salar;
     }
-    
+
     int getId() {
-    return id;
+        return id;
     }
 
     public static void setIdPersoanaLogata(int idPersoanaLogata) {
@@ -76,6 +81,43 @@ public class Persoana {
     }
 
     int getIdDept() {
-        return id_dept;
+        return idDept;
+    }
+
+    /**
+     * Adaugă o înregistrare în tabela Persoana din baza de date
+     *
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
+    public void insert() throws ClassNotFoundException, SQLException {
+        Connection c = openConn();
+        PreparedStatement ps = c.prepareStatement("INSERT INTO PERSOANA(nume,"
+                + "id_dept, adresa, telefon, email, iban,"
+                + "zile_concediu, salar) values (?, ?, ?, ?, ?, ?, ?, ?)");
+        ps.setString(1, nume);
+        ps.setInt(2, idDept);
+        ps.setString(3, adresa);
+        ps.setString(4, telefon);
+        ps.setString(5, email);
+        ps.setString(6, iban);
+        ps.setInt(7, zileConcediu);
+        ps.setFloat(8, salar);
+        ps.execute();
+    }
+
+    /**
+     * Șterge o înregistrare din tabela Persoană din baza de date.
+     *
+     * @param idPersoana identificatorul unic al persoanei care se șterge din
+     * registru
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
+    public static void delete(int idPersoana) throws ClassNotFoundException, SQLException {
+        Connection c = openConn();
+        PreparedStatement ps = c.prepareStatement("DELETE FROM PERSOANA WHERE ID = ?");
+        ps.setInt(1, idPersoana);
+        ps.execute();
     }
 }

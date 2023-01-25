@@ -94,12 +94,10 @@ public class FrameConcediere extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
         try {
-            // TODO add your handling code here:
-            Bd.concediaza(Integer.parseInt(jTextField1.getText()));
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(FrameConcediere.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+            Persoana.delete(Integer.parseInt(jTextField1.getText()));
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(FrameConcediere.class.getName()).log(Level.SEVERE, null, ex);
         }
         jTextField1.setText("");

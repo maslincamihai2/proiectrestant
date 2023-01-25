@@ -109,10 +109,8 @@ public class FrameForm extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             // TODO add your handling code here:
-            Bd.trimiteFormular(new Formular(jTextField1.getText(), jTextArea1.getText()));
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(FrameForm.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+            new Formular(jTextField1.getText(), jTextArea1.getText()).insert();
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(FrameForm.class.getName()).log(Level.SEVERE, null, ex);
         }
         jTextField1.setText("");

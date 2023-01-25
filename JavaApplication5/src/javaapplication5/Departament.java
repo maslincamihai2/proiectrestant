@@ -5,6 +5,11 @@
  */
 package javaapplication5;
 
+import com.mysql.jdbc.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import static javaapplication5.Bd.openConn;
+
 /**
  *
  * @author User
@@ -25,6 +30,20 @@ public class Departament {
 
     public String getNume() {
         return nume;
+    }
+
+    /**
+     * Actualizează o înregistrare din tabela Departament din baza de date.
+     *
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
+     public void update() throws ClassNotFoundException, SQLException {
+        Connection c = openConn();
+        PreparedStatement ps = c.prepareStatement("UPDATE DEPARTAMENT SET nume = ? WHERE ID = ?");
+        ps.setString(1, nume);
+        ps.setInt(2, id);
+        ps.execute();
     }
 
 }

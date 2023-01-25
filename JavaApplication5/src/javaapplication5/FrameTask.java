@@ -8,8 +8,6 @@ package javaapplication5;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -111,19 +109,18 @@ public class FrameTask extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             String data = jTextField2.getText();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); //conversie data
+            //conversie data
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date date = sdf.parse(data);
             java.sql.Date sqlData = new java.sql.Date(date.getTime());
-            Bd.trimiteTask(new Task(Integer.parseInt(jTextField1.getText()),
-                    jTextArea1.getText(), sqlData));
-            
-            jTextField1.setText("");
-            jTextField2.setText("");
-            jTextArea1.setText("");
-            
-        } catch (Exception ex) {
+            new Task(Integer.parseInt(jTextField1.getText()),
+                    jTextArea1.getText(), sqlData).insert();
+        } catch (ClassNotFoundException | NumberFormatException | SQLException | ParseException ex) {
             System.out.println("eroare trimitere task");
         }
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextArea1.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

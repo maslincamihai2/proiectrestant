@@ -5,7 +5,11 @@
  */
 package javaapplication5;
 
+import com.mysql.jdbc.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import static javaapplication5.Bd.openConn;
 
 /**
  *
@@ -34,5 +38,19 @@ public class Task {
         return deadline;
     }
 
-
+     /**
+     * Adaugă o înregistrare în tabela Task din baza de date
+     * @throws ClassNotFoundException
+     * @throws SQLException 
+     */
+    public void insert() throws ClassNotFoundException, SQLException {
+        Connection c = openConn();
+        PreparedStatement ps = c.prepareStatement("INSERT INTO TASK(id_utilizator, descriere, deadline)"
+                + "values (?, ?, ?)");
+        ps.setInt(1, idPersoana);
+        ps.setString(2, descriere);
+        ps.setDate(3, deadline);
+        ps.execute();
+    }
+    
 }

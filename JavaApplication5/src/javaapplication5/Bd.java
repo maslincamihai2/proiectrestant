@@ -7,7 +7,6 @@ package javaapplication5;
 
 import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -106,7 +105,7 @@ public class Bd {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-    public static ArrayList<Departament> getDept() throws ClassNotFoundException, SQLException {
+    public static ArrayList<Departament> getDepartamente() throws ClassNotFoundException, SQLException {
         ArrayList<Departament> departamente = new ArrayList();
         Connection c = openConn();
         Statement st = c.createStatement();
@@ -115,86 +114,5 @@ public class Bd {
             departamente.add(new Departament(rs.getInt(1), rs.getString(2)));
         }
         return departamente;
-    }
-
-    /**
-     * Adaugă o înregistrare în tabela Persoana din baza de date
-     * @param p obiect de tip Persoana
-     * @throws ClassNotFoundException
-     * @throws SQLException 
-     */
-    public static void adaugaPersoana(Persoana p) throws ClassNotFoundException, SQLException {
-        Connection c = openConn();
-        PreparedStatement ps = c.prepareStatement("INSERT INTO PERSOANA(nume,"
-                + "id_dept, adresa, telefon, email, iban,"
-                + "zile_concediu, salar) values (?, ?, ?, ?, ?, ?, ?, ?)");
-        ps.setString(1, p.getNume());
-        ps.setInt(2, p.getIdDept());
-        ps.setString(3, p.getAdresa());
-        ps.setString(4, p.getTelefon());
-        ps.setString(5, p.getMail());
-        ps.setString(6, p.getIban());
-        ps.setInt(7, p.getZileConcediu());
-        ps.setFloat(8, p.getSalar());
-        ps.execute();
-    }
-
-    /**
-     * Adaugă o înregistrare în tabela Formular din baza de date
-     * @param f obiect de tip Formular
-     * @throws ClassNotFoundException
-     * @throws SQLException 
-     */
-    public static void trimiteFormular(Formular f) throws ClassNotFoundException, SQLException {
-        Connection c = openConn();
-        PreparedStatement ps = c.prepareStatement("INSERT INTO FORMULAR(titlu, descriere)"
-                + "values (?, ?)");
-        ps.setString(1, f.getTitlu());
-        ps.setString(2, f.getContinut());
-        ps.execute();
-    }
-
-    /**
-     * Adaugă o înregistrare în tabela Task din baza de date
-     * @param t obiect de tip Task
-     * @throws ClassNotFoundException
-     * @throws SQLException 
-     */
-    public static void trimiteTask(Task t) throws ClassNotFoundException, SQLException {
-        Connection c = openConn();
-        PreparedStatement ps = c.prepareStatement("INSERT INTO TASK(id_utilizator, descriere, deadline)"
-                + "values (?, ?, ?)");
-        ps.setInt(1, t.getIdPersoana());
-        ps.setString(2, t.getDescriere());
-        ps.setDate(3, t.getDeadline());
-        ps.execute();
-    }
-
-    /**
-     * Șterge o înregistrare din tabela Persoană din baza de date.
-     * @param idPersoana identificatorul unic al persoanei care se șterge din registru
-     * @throws ClassNotFoundException
-     * @throws SQLException 
-     */
-    public static void concediaza(int idPersoana) throws ClassNotFoundException, SQLException {
-        Connection c = openConn();
-        PreparedStatement ps = c.prepareStatement("DELETE FROM PERSOANA WHERE ID = ?");
-        ps.setInt(1, idPersoana);
-        ps.execute();
-    }
-
-    /**
-     * Actualizează o înregistrare din tabela Departament din baza de date.
-     * @param id identificatorul unic al departamentului din baza de date
-     * @param numeNou denumirea nouă dată departamentului
-     * @throws ClassNotFoundException
-     * @throws SQLException 
-     */
-    static void modificaDept(int id, String numeNou) throws ClassNotFoundException, SQLException {
-        Connection c = openConn();
-        PreparedStatement ps = c.prepareStatement("UPDATE DEPARTAMENT SET nume = ? WHERE ID = ?");
-        ps.setString(1, numeNou);
-        ps.setInt(2, id);
-        ps.execute();
     }
 }

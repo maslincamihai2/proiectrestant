@@ -191,11 +191,11 @@ public class FrameAdaugaAngajat extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Persoana p = new Persoana(0, boxNume.getText(), Integer.parseInt(boxDept.getText()),
+        Persoana persoanaNoua = new Persoana(0, boxNume.getText(), Integer.parseInt(boxDept.getText()),
                 boxAdresa.getText(), boxTel.getText(), boxMail.getText(),
                 boxIban.getText(), 20, Float.parseFloat(boxSalar.getText()));
         try {
-            Bd.adaugaPersoana(p);
+            persoanaNoua.insert();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(FrameAdaugaAngajat.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

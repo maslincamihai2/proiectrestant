@@ -26,7 +26,7 @@ public class FrameDepartamente extends javax.swing.JFrame {
     }
 
     public void incarcaTabelDepartamente() throws ClassNotFoundException, SQLException {
-        ArrayList<Departament> departamente = Bd.getDept();
+        ArrayList<Departament> departamente = Bd.getDepartamente();
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
         for (Departament d : departamente) {
             Object[] inregistrare = {d.getId(), d.getNume()};
@@ -127,7 +127,11 @@ public class FrameDepartamente extends javax.swing.JFrame {
         int id = (int) dtm.getValueAt(i, 0);
         String numeNou = jTextField1.getText();
         jTextField1.setText("");
-        Bd.modificaDept(id, numeNou);
+        try {
+            new Departament(id, numeNou).update();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(FrameDepartamente.class.getName()).log(Level.SEVERE, null, ex);
+        }
         dtm.setValueAt(numeNou, i, 1);
     }//GEN-LAST:event_jButton3ActionPerformed
 
