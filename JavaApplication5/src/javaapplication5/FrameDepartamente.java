@@ -66,6 +66,11 @@ public class FrameDepartamente extends javax.swing.JFrame {
         jButton1.setText("adauga");
 
         jButton2.setText("sterge");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("modifica");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -122,7 +127,7 @@ public class FrameDepartamente extends javax.swing.JFrame {
         if (jTable1.getSelectedRowCount() != 1) {
             return;
         }
-            DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
         int i = jTable1.getSelectedRow();
         int id = (int) dtm.getValueAt(i, 0);
         String numeNou = jTextField1.getText();
@@ -134,6 +139,23 @@ public class FrameDepartamente extends javax.swing.JFrame {
         }
         dtm.setValueAt(numeNou, i, 1);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if (jTable1.getSelectedRowCount() != 1) {
+            return;
+        }
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        int i = jTable1.getSelectedRow();
+        int id = (int) dtm.getValueAt(i, 0);
+        String nume = (String) dtm.getValueAt(i, 1);
+        try {
+            new Departament(id, nume).delete();
+            dtm.removeRow(i);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(FrameDepartamente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

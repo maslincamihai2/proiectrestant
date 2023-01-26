@@ -20,20 +20,38 @@ public class Task {
     private String descriere;
     private Date deadline;
 
+    /**
+     * Contructorul clasei
+     * @param idPersoana identificatorul unic din baza de date al persoanei căreia îi este destinat task-ul
+     * @param descriere descrierea sarcinii
+     * @param deadline  termenul limită până când trebuie finalizată sarcina
+     */
     public Task(int idPersoana, String descriere, Date deadline) {
         this.idPersoana = idPersoana;
         this.descriere = descriere;
         this.deadline = deadline;
     }
 
+    /**
+     * Returneaza identificatorul persoanei căreia îi este destinat task-ul
+     * @return identificatorul unei persoane din baza de date ca număr întreg
+     */
     public int getIdPersoana() {
         return idPersoana;
     }
 
+    /**
+     * Returnează descrierea task-ului
+     * @return descrierea task-ului ca șir de caractere
+     */
     public String getDescriere() {
         return descriere;
     }
 
+    /**
+     * Returnează termenul limită
+     * @return deadline-ul unui task in format Date SQL
+     */
     public Date getDeadline() {
         return deadline;
     }

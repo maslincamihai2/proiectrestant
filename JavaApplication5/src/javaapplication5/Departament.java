@@ -38,9 +38,17 @@ public class Departament {
      * @throws ClassNotFoundException
      * @throws SQLException
      */
-     public void update() throws ClassNotFoundException, SQLException {
+    public void update() throws ClassNotFoundException, SQLException {
         Connection c = openConn();
         PreparedStatement ps = c.prepareStatement("UPDATE DEPARTAMENT SET nume = ? WHERE ID = ?");
+        ps.setString(1, nume);
+        ps.setInt(2, id);
+        ps.execute();
+    }
+
+    public void delete() throws ClassNotFoundException, SQLException {
+        Connection c = openConn();
+        PreparedStatement ps = c.prepareStatement("DELETE FROM DEPARTAMENT WHERE nume = ? AND id = ?");
         ps.setString(1, nume);
         ps.setInt(2, id);
         ps.execute();
